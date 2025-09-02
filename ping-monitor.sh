@@ -1,15 +1,20 @@
 #!/bin/bash
 
-# Change these according to your network
-ROUTER_IP="192.168.1.1" # your router
-ISP_GATEWAY="XXX.XXX.XXX.XXX" # your ISP's first hop
-GOOGLE_DNS="8.8.8.8"
+# Usage check
+if [ "$#" -lt 2 ]; then
+    echo "Error: Missing required arguments"
+    echo "Usage: $0 ROUTER_IP ISP_GATEWAY SLEEP_INTERVAL"
+    exit 1
+fi
 
-SLEEP_INTERVAL=1 # seconds between pings
+ROUTER_IP="$1"
+ISP_GATEWAY="$2"
+SLEEP_INTERVAL="${3:-1}"
+
+GOOGLE_DNS="8.8.8.8"
 
 LOGFILE="log.txt"
 
-echo "=== Starting ping monitor $(date) ===" >> "$LOGFILE"
 echo "=== Starting ping monitor $(date) ===" | tee -a "$LOGFILE"
 
 while true; do

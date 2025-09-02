@@ -10,15 +10,17 @@ This guide assumes you have a Raspberry Pi set up with Raspberry Pi OS.
 
 List all IPs on local network and find RPI:
 
-```
+```bash
 sudo nmap -sn 192.168.1.0/24
 ```
 
 ### SSH configuration
 
-Change SSH port:
+Connect to your RPI via SSH and change SSH port:
 
-```
+```bash
+ssh pi@<RPI_IP_ADDRESS>
+
 sudo vi /etc/ssh/sshd_config
 
 # Change the port number from 22 to desired port, e.g., 2222
@@ -30,7 +32,7 @@ sudo systemctl restart ssh
 
 Install and configure UFW:
 
-```
+```bash
 sudo apt update
 sudo apt install ufw
 
@@ -45,7 +47,7 @@ sudo ufw enable
 
 ### Install necessary packages
 
-```
+```bash
 # Install traceroute
 sudo apt install traceroute
 
@@ -60,32 +62,35 @@ sudo apt install git
 
 Pull the ping-monitor repository:
 
-```
+```bash
 git clone https://github.com/medolino/ping-monitor.git
 
 cd ping-monitor
 ```
 
-Change the IP addresses in `ping-monitor.sh` to match your network configuration:
-```
-# Find your router's IP address and your ISP's first hop using traceroute
-traceroute -n 8.8.8.8
-
-# Edit ping-monitor.sh and set ROUTER_IP and ISP_GATEWAY
-vi ping-monitor.sh
-
-# Make the script executable
+Make the script executable:
+```bash
 chmod +x ping-monitor.sh
 ```
 
 ## Run the ping-monitor script in the background
 
+Find your router's IP address and your ISP's first hop using traceroute:
+
+```bash
+traceroute -n 8.8.8.8
 ```
+
+Start the ping-monitor script in a screen session, replacing the placeholder IP addresses in the script with your actual router and ISP gateway IPs:
+```bash
 # Start a new screen session named ping-monitor
 screen -S ping-monitor
-./ping-monitor.sh
+
+# Run the ping-monitor script with your router IP, ISP gateway IP, and desired sleep interval (in seconds)
+./ping-monitor.sh ROUTER_IP ISP_GATEWAY SLEEP_INTERVAL 
 
 # Detach from the screen session (press Ctrl+A, then D)
+
 # To reattach to the screen session later, use:
 screen -r ping-monitor
 ```
