@@ -1,6 +1,10 @@
 # Ping Monitor
 A simple bash script to monitor the connectivity to your router, your ISP's gateway, and Google's DNS server.
-It logs the results to a file for later analysis.
+It logs the results to a file for later analysis and can be used to detect intermittent network outages and packet loss.
+
+The script was designed to run on a separate device, such as a Raspberry Pi, so it can continuously monitor your network without interfering with your main computers or devices.
+
+Although this guide uses a Raspberry Pi for demonstration purposes, the script can run on any Linux machine that has bash and ping installed.
 
 ## Raspberry Pi Configuration
 
@@ -45,7 +49,11 @@ sudo ufw allow 2222/tcp
 sudo ufw enable
 ```
 
+## Set up the ping-monitor script
+
 ### Install necessary packages
+
+Install the necessary packages: traceroute, screen, and git.
 
 ```bash
 # Install traceroute
@@ -58,7 +66,7 @@ sudo apt install screen
 sudo apt install git
 ```
 
-### Set up ping-monitor script
+### Pull the ping-monitor repository
 
 Pull the ping-monitor repository:
 
@@ -73,7 +81,7 @@ Make the script executable:
 chmod +x ping-monitor.sh
 ```
 
-## Run the ping-monitor script in the background
+### Run the ping-monitor script in the background
 
 Find your router's IP address and your ISP's first hop using traceroute:
 
