@@ -103,3 +103,11 @@ screen -S ping-monitor
 screen -r ping-monitor
 ```
 
+## View the log file
+
+You can view the log file using `tail` or similar commands:
+
+```bash
+tail -f log.txt
+```
+
